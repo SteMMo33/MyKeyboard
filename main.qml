@@ -5,11 +5,14 @@ Window {
     visible: true
     width: 640
     height: 480
-    title: qsTr("Hello World")
+    title: qsTr("Qt Keyboard")
 
     Keyboard {
-        width: 400
+        width: 450
         height: 400
 
+        onKeyboardCode: function (code) {
+            console.log("Codice: "+code)
+        }
     }
 }

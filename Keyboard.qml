@@ -4,6 +4,8 @@ Item {
     id: element
     transformOrigin: Item.Center
 
+    signal keyboardCode(string code)
+
     Rectangle {
         id: rectangle
         width: 400
@@ -17,6 +19,8 @@ Item {
             id: grid
             x: 120
             y: 40
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.verticalCenter: parent.verticalCenter
             columns: 3
 
             Key {
@@ -82,7 +86,10 @@ Item {
             Key {
                 id: keyAcq
                 text: "ACQ"
-                onClicked: nextDel = true
+                onClicked: {
+                    nextDel = true
+                    keyboardCode(display.text)
+                }
             }
         }
 
@@ -121,6 +128,6 @@ Item {
 
 /*##^##
 Designer {
-    D{i:0;autoSize:true;height:480;width:640}D{i:15;anchors_x:8}
+    D{i:0;height:400;width:450}D{i:15;anchors_x:8}
 }
 ##^##*/
