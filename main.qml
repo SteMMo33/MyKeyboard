@@ -6,4 +6,10 @@ Window {
     width: 640
     height: 480
     title: qsTr("Hello World")
+
+    Keyboard {
+        width: 400
+        height: 400
+
+    }
 }
