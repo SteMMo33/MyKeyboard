@@ -8,10 +8,7 @@ Item {
 
     Rectangle {
         id: rectangle
-        width: 400
-        height: 400
-        anchors.verticalCenter: parent.verticalCenter
-        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.fill: parent
         border.color: "blue"
         border.width: 2
 
@@ -97,7 +94,9 @@ Item {
             id: display
             y: 353
             color: "#0000ff"
-            text: qsTr("Display")
+            text: qsTr("Prodotto")
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: 8
             font.weight: Font.DemiBold
             styleColor: "#f36a6a"
             horizontalAlignment: Text.AlignHCenter
@@ -112,6 +111,8 @@ Item {
 
 
     property var nextDel: false
+    width: 380
+    height: 350
 
     function addKey(key){
         if (nextDel){
@@ -128,6 +129,6 @@ Item {
 
 /*##^##
 Designer {
-    D{i:0;height:400;width:450}D{i:15;anchors_x:8}
+    D{i:0;height:400;width:450}D{i:15;anchors_x:8}D{i:1;anchors_height:400;anchors_width:400}
 }
 ##^##*/
