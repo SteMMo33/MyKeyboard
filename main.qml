@@ -6,7 +6,9 @@ Window {
     visible: true
     width: 1000
     height: 800
-    title: qsTr("Qt Keyboard")
+    title: qsTr("ATK CP40")
+
+    FontLoader { id: lcdFont; name: "atkFont"; source: "qrc:font/ProximaNova-Regular.otf" }
 
     // - MVC - MVD
     ListModel {
@@ -15,16 +17,19 @@ Window {
             title: "TTT111"
             prodId: 5
             image: "image1"
+            prezzo: 9.0
         }
         ListElement {
             title: "TTT222"
             prodId: 3
             image: "image2"
+            prezzo: 10.0
         }
         ListElement {
             title: "TTT333"
             prodId: 4
             image: "image4"
+            prezzo: 9.80
         }
     }
 
@@ -41,7 +46,7 @@ Window {
     Component {
         id: delegateProdotti
         Text {
-            text: title + " - " + image
+            text: title + " - " + image + "\nPrezzo: " + prezzo
         }
     }
 
@@ -171,6 +176,24 @@ Window {
                 fillMode: Image.PreserveAspectFit
             }
         }
+    }
+
+    Text {
+        id: element
+        x: 612
+        y: 21
+        text: qsTr("Farmacie di turno")
+        font.pixelSize: 30
+    }
+
+    Text {
+        id: element1
+        x: 411
+        y: 149
+        color: "#fc7f15"
+        text: qsTr("0.00")
+        font.pixelSize: 50
+        font.family: atkFont.name
     }
 }
 
