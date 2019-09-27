@@ -1,16 +1,56 @@
-import QtQuick 2.13
-import QtQuick.Window 2.13
+import QtQuick 2.11
+import QtQuick.Window 2.11
 
 Window {
     id: window
     visible: true
-    width: 640
-    height: 580
+    width: 1000
+    height: 800
     title: qsTr("Qt Keyboard")
 
+    // - MVC - MVD
+    ListModel {
+        id: listModelProdotti
+        ListElement {
+            title: "TTT111"
+            prodId: 5
+            image: "image1"
+        }
+        ListElement {
+            title: "TTT222"
+            prodId: 3
+            image: "image2"
+        }
+        ListElement {
+            title: "TTT333"
+            prodId: 4
+            image: "image4"
+        }
+    }
+
+    ListView {
+        x: 15
+        width: 100
+        height: 68
+        anchors.top: keyboard.bottom
+        anchors.topMargin: 6
+        model: listModelProdotti
+        delegate: delegateProdotti
+    }
+
+    Component {
+        id: delegateProdotti
+        Text {
+            text: title + " - " + image
+        }
+    }
+
+    // -- Fine MVC - MVD
+
     Keyboard {
+        id: keyboard
         width: 400
-        height: 344
+        height: 399
         anchors.left: parent.left
         anchors.leftMargin: 5
         anchors.top: parent.top
@@ -26,39 +66,88 @@ Window {
                 image.source = "FinissmoEasyWay_6.png"
             else if (code[0]==='4')
                 image.source = "gel_madagascar.png"
+            else if (code[0]==='5')
+                image.source = "sensual-massage.png"
             else
-                image.source = "cactus.jpg"
+                image.source = "TestdiGravidanza_NEW.jpg"
         }
     }
 
-    Image {
-        id: image
+    Rectangle{
+        id: rectProduct
         x: 418
         width: 200
-        height: 200
+        height: 227
         anchors.top: parent.top
         anchors.topMargin: 149
         anchors.right: parent.right
         anchors.rightMargin: 22
-        source: "cactus.jpg"
+    Image {
+        id: image
+        anchors.fill: parent
+        source: "pingu200.png"
         fillMode: Image.PreserveAspectFit
+    }
+        MouseArea {
+            id: mouseArea
+            anchors.fill: parent
+            onClicked: {
+                console.log("Pressed for anim")
+                //prodAnimation.start()
+                //propAnim.start()
+                propAnimVert.start()
+            }
+        }
+
+        NumberAnimation on y {
+            target: image
+            //target: rectProduct
+            // property: "x"
+            id: prodAnimation
+            // from: 0;
+            to: 600
+            // to: rectProduct.width - image.width - rectProduct.padding
+            duration:1500
+        }
+
+        PropertyAnimation {
+            id: propAnimVert
+        target: rectProduct
+        properties: "x"
+        // from: 100;
+        to: 600
+        duration:1500
+        //running: true
+        easing.type: "OutElastic"
+        }
+
+        PropertyAnimation {
+            id: propAnim
+        target: rectProduct
+        // properties: "width, height"
+        properties: "x"
+        from: 100; to: 200
+        duration:1500
+        //running: true
+        easing.type: "InElastic"
+        }
     }
 
     Image {
         id: image1
-        x: 431
-        y: 10
+        x: 475
+        y: 5
         source: "orologio.png"
         fillMode: Image.PreserveAspectFit
     }
 
     Image {
         id: image2
-        y: 370
+        y: 461
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: 3
+        anchors.bottomMargin: 15
         anchors.left: parent.left
-        anchors.leftMargin: 3
+        anchors.leftMargin: 15
         source: "BTN.png"
         fillMode: Image.PreserveAspectFit
 
@@ -85,9 +174,6 @@ Window {
     }
 }
 
-/*##^##
-Designer {
-    D{i:2;anchors_y:10}D{i:6;anchors_height:161;anchors_width:155;anchors_x:27;anchors_y:20}
-D{i:4;anchors_x:0}
-}
-##^##*/
+
+
+

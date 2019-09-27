@@ -2,14 +2,15 @@ import QtQuick 2.0
 
 Item {
     id: element1
-    width: 60
-    height: 60
+    width: 80
+    height: 80
 
     property alias text: element.text
 
     signal clicked()
 
     Rectangle {
+        id: rectBtn
         radius: 3
         border.width: 2
         border.color: "#fc7f15"
@@ -28,6 +29,8 @@ Item {
             id: mouseArea
             anchors.fill: parent
             onClicked: element1.clicked()
+            onPressed: rectBtn.color = "red"
+            onReleased: parent.color = "white"
         }
     }
 

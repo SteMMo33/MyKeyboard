@@ -8,16 +8,28 @@ Item {
 
     Rectangle {
         id: rectangle
+        gradient: Gradient {
+            GradientStop {
+                position: 0
+                color: "#0231b5"
+            }
+
+            GradientStop {
+                position: 0.611
+                color: "#fbfbfb"
+            }
+        }
+        border.color: "#00000000"
+        anchors.bottomMargin: 0
         anchors.fill: parent
-        border.color: "blue"
         border.width: 2
 
         Grid {
             id: grid
             x: 120
-            y: 40
+            anchors.top: parent.top
+            anchors.topMargin: rectangle.height / 15 // 40
             anchors.horizontalCenter: parent.horizontalCenter
-            anchors.verticalCenter: parent.verticalCenter
             columns: 3
 
             Key {
@@ -110,9 +122,9 @@ Item {
     }
 
 
-    property var nextDel: false
+    property var nextDel: true
     width: 380
-    height: 350
+    height: 363
 
     function addKey(key){
         if (nextDel){
@@ -129,6 +141,6 @@ Item {
 
 /*##^##
 Designer {
-    D{i:0;height:400;width:450}D{i:15;anchors_x:8}D{i:1;anchors_height:400;anchors_width:400}
+    D{i:0;height:400;width:450}D{i:2;anchors_y:40}D{i:15;anchors_x:8}D{i:1;anchors_height:400;anchors_width:400}
 }
 ##^##*/
