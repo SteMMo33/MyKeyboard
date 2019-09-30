@@ -1,14 +1,14 @@
-import QtQuick 2.11
-import QtQuick.Window 2.11
+import QtQuick 2.5
+import QtQuick.Window 2.0
 
 Window {
     id: window
     visible: true
     width: 1000
     height: 800
-    title: qsTr("ATK CP40")
+    title: qsTr("ATK CP40 - CP66")
 
-    FontLoader { id: lcdFont; name: "atkFont"; source: "qrc:font/ProximaNova-Regular.otf" }
+    FontLoader { id: atkFont; name: "atkFont"; source: "qrc:fonts/ProximaNova-Bold.otf" }
 
     // - MVC - MVD
     ListModel {
@@ -184,6 +184,7 @@ Window {
         y: 21
         text: qsTr("Farmacie di turno")
         font.pixelSize: 30
+        font.family: atkFont.name
     }
 
     Text {

@@ -10,7 +10,10 @@
         <file>BTN.png</file>
         <file>orologio.png</file>
         <file>sensual-massage.png</file>
-        <file>ProximaNova-Regular.otf</file>
-        <file>ProximaNova-Bold.otf</file>
+        <file>fonts/ProximaNova-Bold.otf</file>
+        <file>fonts/ProximaNova-Regular.otf</file>
+        <file>label.cpp</file>
+        <file>label.h</file>
+        <file>main.cpp</file>
     </qresource>
 </RCC>
