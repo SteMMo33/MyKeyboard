@@ -2,6 +2,10 @@ import QtQuick 2.5
 
 
 Item {
+    id: container
+    property alias detailTitle: detailTitle
+    property alias detailFotoProd: detailFotoProd
+
     Rectangle {
         id: background
         color: "#80000000"
@@ -25,29 +29,35 @@ Item {
             }
 
             Text {
-                id: text2
+                id: detailTitle
                 x: 40
                 y: 85
                 text: qsTr("Text")
-                font.pixelSize: 12
+                font.pixelSize: 20
             }
 
             Image {
-                id: image
-                x: 332
-                y: 8
-                width: 100
-                height: 100
-                source: "qrc:/qtquickplugin/images/template_image.png"
+                id: detailFotoProd
+                x: 246
+                width: 186
+                height: 180
+                anchors.right: parent.right
+                anchors.rightMargin: 15
+                anchors.top: parent.top
+                anchors.topMargin: 15
+                fillMode: Image.PreserveAspectFit
+                source: "images/gel_madagascar.png"
             }
 
             Rectangle {
-                id: rectangle1
+                id: btnRitorna
                 x: 60
                 y: 201
                 width: 146
                 height: 54
-                color: "#ffffff"
+                color: "#fdafaf"
+                anchors.bottom: parent.bottom
+                anchors.bottomMargin: 25
 
                 Text {
                     id: txtRitorna
@@ -61,16 +71,19 @@ Item {
                 MouseArea {
                     id: mouseArea
                     anchors.fill: parent
+                    onClicked: container.visible = false
                 }
             }
 
             Rectangle {
-                id: rectangle2
+                id: btnAcquista
                 x: 228
                 y: 201
                 width: 146
                 height: 54
-                color: "#ffffff"
+                color: "#a6f9a2"
+                anchors.bottom: parent.bottom
+                anchors.bottomMargin: 25
 
                 Text {
                     id: txtAcquista
@@ -84,6 +97,7 @@ Item {
                 MouseArea {
                     id: mouseArea1
                     anchors.fill: parent
+                    onClicked: container.visible = false
                 }
             }
         }

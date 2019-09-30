@@ -16,5 +16,8 @@
         <file>label.h</file>
         <file>main.cpp</file>
         <file>DetailDiv.qml</file>
+        <file>images/gel_madagascar.png</file>
+        <file>ioboard.cpp</file>
+        <file>ioboard.h</file>
     </qresource>
 </RCC>

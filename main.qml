@@ -65,14 +65,26 @@ Window {
             console.log("Codice: "+code)
             if (code[0]==='1')
                 image.source = "pingu200.png"
-            else if (code[0]==='2')
-                image.source = "Finissimo12.png"
-            else if (code[0]==='3')
-                image.source = "FinissmoEasyWay_6.png"
-            else if (code[0]==='4')
-                image.source = "gel_madagascar.png"
-            else if (code[0]==='5')
-                image.source = "sensual-massage.png"
+            else if (code[0]==='2'){
+                imageProd.source = "Finissimo12.png"
+                detailFotoProd.source = "Finissimo12.png"
+                detailTitle.text = "Finissimo 12"
+            }
+            else if (code[0]==='3'){
+                imageProd.source = "FinissmoEasyWay_6.png"
+                divDetail.detailFotoProd.source = "FinissmoEasyWay_6.png"
+                divDetail.detailTitle.text = "Finissimo Easy Way"
+            }
+            else if (code[0]==='4'){
+                imageProd.source = "gel_madagascar.png"
+                divDetail.detailTitle = "Gel Madagascar"
+                divDetail.detailFotoProd.source = "gel_madagascar.png"
+            }
+            else if (code[0]==='5'){
+                imageProd.source = "sensual-massage.png"
+                divDetail.detailFotoProd.source = "sensual-massage.png"
+                divDetail.detailTitle.text = "Sensual Massage"
+            }
             else
                 image.source = "TestdiGravidanza_NEW.jpg"
         }
@@ -147,7 +159,7 @@ Window {
     }
 
     Image {
-        id: image2
+        id: bottoneProd
         y: 461
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 15
@@ -176,6 +188,12 @@ Window {
                 fillMode: Image.PreserveAspectFit
             }
         }
+
+        MouseArea {
+            id: mouseArea1
+            anchors.fill: parent
+            onClicked: divDetail.visible = true
+        }
     }
 
     Text {
@@ -198,6 +216,7 @@ Window {
     }
 
     DetailDiv {
+        id: divDetail
         visible: false
         anchors.fill: parent
     }
