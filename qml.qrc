@@ -15,5 +15,6 @@
         <file>label.cpp</file>
         <file>label.h</file>
         <file>main.cpp</file>
+        <file>DetailDiv.qml</file>
     </qresource>
 </RCC>

@@ -11,7 +11,7 @@ public:
 
 
 private:
-    QWebSocket m_webSocket;
+    QWebSocket* m_pWebSocket;
 };
 
 #endif // IOBOARD_H

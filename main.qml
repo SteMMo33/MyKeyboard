@@ -8,7 +8,7 @@ Window {
     height: 800
     title: qsTr("ATK CP40 - CP66")
 
-    FontLoader { id: atkFont; name: "atkFont"; source: "qrc:fonts/ProximaNova-Bold.otf" }
+    FontLoader { id: atkFont; name: "Proxima Nova Rg"; source: "qrc:fonts/ProximaNova-Bold.otf" }
 
     // - MVC - MVD
     ListModel {
@@ -179,7 +179,7 @@ Window {
     }
 
     Text {
-        id: element
+        id: farmacie
         x: 612
         y: 21
         text: qsTr("Farmacie di turno")
@@ -188,13 +188,18 @@ Window {
     }
 
     Text {
-        id: element1
+        id: credit
         x: 411
         y: 149
         color: "#fc7f15"
         text: qsTr("0.00")
         font.pixelSize: 50
         font.family: atkFont.name
+    }
+
+    DetailDiv {
+        visible: false
+        anchors.fill: parent
     }
 }
 
