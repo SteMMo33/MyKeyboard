@@ -4,6 +4,8 @@
 #include <QQmlComponent>    //SM +
 
 #include "label.h"
+#include "ioboard.h"
+
 
 
 int main(int argc, char *argv[])
@@ -40,5 +42,10 @@ int main(int argc, char *argv[])
     //if(button)
     //    button->setProperty("text","c++");
 
+
+    // - WebSocket
+    IoBoard* board = new IoBoard();
+
+    // Run
     return app.exec();
 }

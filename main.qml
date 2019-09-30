@@ -35,7 +35,7 @@ Window {
 
     ListView {
         x: 15
-        width: 100
+        width: 150
         height: 68
         anchors.top: keyboard.bottom
         anchors.topMargin: 6
