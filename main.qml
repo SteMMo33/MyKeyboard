@@ -10,51 +10,14 @@ Window {
 
     FontLoader { id: atkFont; name: "Proxima Nova Rg"; source: "qrc:fonts/ProximaNova-Bold.otf" }
 
-    // - MVC - MVD
-    ListModel {
-        id: listModelProdotti
-        ListElement {
-            title: "TTT111"
-            prodId: 5
-            image: "image1"
-            prezzo: 9.0
-        }
-        ListElement {
-            title: "TTT222"
-            prodId: 3
-            image: "image2"
-            prezzo: 10.0
-        }
-        ListElement {
-            title: "TTT333"
-            prodId: 4
-            image: "image4"
-            prezzo: 9.80
-        }
-    }
-
-    ListView {
-        x: 15
-        width: 150
-        height: 68
-        anchors.top: keyboard.bottom
-        anchors.topMargin: 6
-        model: listModelProdotti
-        delegate: delegateProdotti
-    }
-
-    Component {
-        id: delegateProdotti
-        Text {
-            text: title + " - " + image + "\nPrezzo: " + prezzo
-        }
-    }
-
-    ListView {
+    GridView {
         id: listModelFromCpp
-        x: 730
-        y: 670
-        width: 200; height: 100
+        x: 637
+        y: 535
+        width: 350; height: 200
+        cellHeight: 80
+        contentHeight: 100
+        contentWidth: 100
         anchors.right: parent.right
         anchors.rightMargin: 30
         anchors.bottom: parent.bottom
@@ -64,7 +27,17 @@ Window {
         delegate: Rectangle {
             height: 25
             width: 100
-            Text { text: modelData }
+            // anchors.fill: parent
+            //width: parent.cellWidth
+            //height: parent.cellHeight
+            color: modelData.color
+            Text {
+                text: modelData.name
+                font.pointSize: 10
+            }
+            MouseArea {
+                onClicked: console.log(modelData.name)
+            }
         }
     }
 

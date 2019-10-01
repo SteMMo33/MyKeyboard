@@ -16,7 +16,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         label.cpp \
         main.cpp \
-    ioboard.cpp
+    ioboard.cpp \
+    productobject.cpp
 
 RESOURCES += qml.qrc
 
@@ -33,4 +34,5 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 HEADERS += \
     label.h \
-    ioboard.h
+    ioboard.h \
+    productobject.h

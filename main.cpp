@@ -5,9 +5,12 @@
 
 #include "label.h"
 #include "ioboard.h"
+#include "productobject.h"
 
 
-
+/**
+    Punto ingresso
+*/
 int main(int argc, char *argv[])
 {
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
@@ -36,13 +39,24 @@ int main(int argc, char *argv[])
 
 
     // Dati inseriti da codice C++ - diventerà lettura da DB
+    /* Con semplice lista di stringhe
     QStringList dataList;
     dataList.append("Item 1");
     dataList.append("Item 2");
     dataList.append("Item 3");
     dataList.append("Item 4");
     context->setContextProperty("myProductModel", QVariant::fromValue(dataList));
+    */
 
+    // Con lista oggetti ProductObject
+    QList<QObject*> dataList;
+       dataList.append(new ProductObject(QString("Easy 12"), QString("red")));
+       dataList.append(new ProductObject("Signs 12", "green"));
+       dataList.append(new ProductObject("Cerotti buoni", "blue"));
+       dataList.append(new ProductObject("Gel Mediterranean", "yellow"));
+       dataList.append(new ProductObject("XLUBE", "orange"));
+
+    context->setContextProperty("myProductModel", QVariant::fromValue(dataList));
 
     engine.load(url);
 
