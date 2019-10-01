@@ -3,13 +3,6 @@
         <file>main.qml</file>
         <file>Keyboard.qml</file>
         <file>Key.qml</file>
-        <file>pingu200.png</file>
-        <file>Finissimo12.png</file>
-        <file>FinissmoEasyWay_6.png</file>
-        <file>gel_madagascar.png</file>
-        <file>BTN.png</file>
-        <file>orologio.png</file>
-        <file>sensual-massage.png</file>
         <file>fonts/ProximaNova-Bold.otf</file>
         <file>fonts/ProximaNova-Regular.otf</file>
         <file>label.cpp</file>
@@ -19,5 +12,11 @@
         <file>images/gel_madagascar.png</file>
         <file>ioboard.cpp</file>
         <file>ioboard.h</file>
+        <file>images/BTN.png</file>
+        <file>images/Finissimo12.png</file>
+        <file>images/FinissmoEasyWay_6.png</file>
+        <file>images/orologio.png</file>
+        <file>images/pingu200.png</file>
+        <file>images/sensual-massage.png</file>
     </qresource>
 </RCC>

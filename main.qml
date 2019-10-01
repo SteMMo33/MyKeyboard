@@ -23,7 +23,8 @@ Window {
     GridView {
         id: listModelFromCpp
         cellHeight: 80
-        contentHeight: 100
+
+        contentHeight: 80
         contentWidth: 100
         anchors.fill: parent
 
@@ -34,7 +35,7 @@ Window {
             //anchors.fill: parent
             color: modelData.color
             Text {
-                text: modelData.name
+                text: modelData.name + " - " + modelData.prezzo
                 anchors.fill: parent
                 anchors.centerIn: parent
                 font.pointSize: 20
@@ -59,27 +60,27 @@ Window {
         onKeyboardCode: function (code) {
             console.log("Codice: "+code)
             if (code[0]==='1'){
-                image.source = "pingu200.png"
-                imageProd.source = "pingu200.png"
+                image.source = "images/pingu200.png"
+                imageProd.source = "images/pingu200.png"
             }
             else if (code[0]==='2'){
-                imageProd.source = "Finissimo12.png"
-                divDetail.detailFotoProd.source = "Finissimo12.png"
+                imageProd.source = "images/Finissimo12.png"
+                divDetail.detailFotoProd.source = "images/Finissimo12.png"
                 divDetail.detailTitle.text = "Finissimo 12"
             }
             else if (code[0]==='3'){
-                imageProd.source = "FinissmoEasyWay_6.png"
-                divDetail.detailFotoProd.source = "FinissmoEasyWay_6.png"
+                imageProd.source = "images/FinissmoEasyWay_6.png"
+                divDetail.detailFotoProd.source = "images/FinissmoEasyWay_6.png"
                 divDetail.detailTitle.text = "Finissimo Easy Way"
             }
             else if (code[0]==='4'){
-                imageProd.source = "gel_madagascar.png"
+                imageProd.source = "images/gel_madagascar.png"
                 divDetail.detailTitle.text = "Gel Madagascar"
-                divDetail.detailFotoProd.source = "gel_madagascar.png"
+                divDetail.detailFotoProd.source = "images/gel_madagascar.png"
             }
             else if (code[0]==='5'){
-                imageProd.source = "sensual-massage.png"
-                divDetail.detailFotoProd.source = "sensual-massage.png"
+                imageProd.source = "images/sensual-massage.png"
+                divDetail.detailFotoProd.source = "images/sensual-massage.png"
                 divDetail.detailTitle.text = "Sensual Massage"
             }
             else
@@ -99,7 +100,7 @@ Window {
         Image {
             id: image
             anchors.fill: parent
-            source: "pingu200.png"
+            source: "images/pingu200.png"
             fillMode: Image.PreserveAspectFit
         }
         MouseArea {
@@ -185,10 +186,10 @@ Window {
     }
 
     Image {
-        id: image1
+        id: imgOrologio
         x: 475
         y: 5
-        source: "orologio.png"
+        source: "images/orologio.png"
         fillMode: Image.PreserveAspectFit
     }
 
@@ -199,7 +200,7 @@ Window {
         anchors.bottomMargin: 15
         anchors.left: parent.left
         anchors.leftMargin: 15
-        source: "BTN.png"
+        source: "images/BTN.png"
         fillMode: Image.PreserveAspectFit
 
         Rectangle {
@@ -218,7 +219,7 @@ Window {
                 anchors.bottomMargin: 10
                 anchors.topMargin: 10
                 anchors.fill: parent
-                source: "Finissimo12.png"
+                source: "images/Finissimo12.png"
                 fillMode: Image.PreserveAspectFit
             }
         }
