@@ -10,37 +10,41 @@ Window {
 
     FontLoader { id: atkFont; name: "Proxima Nova Rg"; source: "qrc:fonts/ProximaNova-Bold.otf" }
 
-    GridView {
-        id: listModelFromCpp
-        x: 637
-        y: 535
+    Rectangle {
         width: 350; height: 200
-        cellHeight: 80
-        contentHeight: 100
-        contentWidth: 100
+        color: "#80000040"
+        //x: 637
+        //y: 535
         anchors.right: parent.right
         anchors.rightMargin: 30
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 30
 
+    GridView {
+        id: listModelFromCpp
+        cellHeight: 80
+        contentHeight: 100
+        contentWidth: 100
+        anchors.fill: parent
+
         model: myProductModel
         delegate: Rectangle {
-            height: 25
-            width: 100
-            // anchors.fill: parent
-            //width: parent.cellWidth
-            //height: parent.cellHeight
+            height: parent.height
+            width: parent.width
+            //anchors.fill: parent
             color: modelData.color
             Text {
                 text: modelData.name
-                font.pointSize: 10
+                anchors.fill: parent
+                anchors.centerIn: parent
+                font.pointSize: 20
             }
             MouseArea {
                 onClicked: console.log(modelData.name)
             }
         }
     }
-
+}
     // -- Fine MVC - MVD
 
     Keyboard {
