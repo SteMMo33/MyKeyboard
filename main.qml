@@ -1,7 +1,13 @@
 import QtQuick 2.5
 import QtQuick.Window 2.0
+import QtWebSockets 1.0
+
 
 Window {
+
+    property int colonne;
+    property var credit : 0
+
     id: window
     visible: true
     width: 1000
@@ -10,42 +16,130 @@ Window {
 
     FontLoader { id: atkFont; name: "Proxima Nova Rg"; source: "qrc:fonts/ProximaNova-Bold.otf" }
 
+    // ---
+
+    WebSocket {
+        id: socket
+        // url: "ws://echo.websocket.org" //
+        url: "ws://10.191.40.232:7681"
+        onTextMessageReceived: {
+            messageBox.text = messageBox.text + "\nReceived message: " + message
+        }
+        onStatusChanged: if (socket.status == WebSocket.Error) {
+                                    console.log("Error: " + socket.errorString)
+                                } else if (socket.status == WebSocket.Open) {
+                                    socket.sendTextMessage("Hello World")
+                                } else if (socket.status == WebSocket.Closed) {
+                                    messageBox.text += "\nSocket closed"
+                                } else if (socket.status == WebSocket.Connecting) {
+                             messageBox.text += "\nto "+socket.url
+                         }
+        active: false
+    }
+
+    Text {
+       id: messageBox
+       text: socket.status == WebSocket.Open ? qsTr("Sending...") : qsTr("Welcome!")
+       anchors.centerIn: parent
+       height: 100;
+
+       MouseArea {
+              anchors.fill: parent
+              onClicked: {
+                  socket.active = !socket.active
+                  console.log("Press: "+socket.active)
+                  messageBox.text = "Now is "+socket.active
+                  //if (socket.active == WebSocket.Connecting)
+                  //    messageBox.text += "\nto: "+socket.url
+                  //Qt.quit();
+              }
+          }
+    }
+
+    Text {
+        id: wsCmd
+        text: qsTr("CMD")
+        verticalAlignment: Text.AlignVCenter
+        horizontalAlignment: Text.AlignHCenter
+       x: 48
+       y: 432
+       width: 200
+       height: 100;
+
+       MouseArea {
+           anchors.fill: parent
+              onClicked: {
+                  socket.sendTextMessage("{ cmd: \"firmware\"} ")
+                  console.log("SentCmd")
+              }
+          }
+    }
+
+    // ----
+
     Rectangle {
-        width: 350; height: 200
+        id: containerBtns
+        y: 557
+        height: 300
         color: "#80000040"
-        //x: 637
-        //y: 535
+        anchors.left: parent.left
+        anchors.leftMargin: 520
+
         anchors.right: parent.right
         anchors.rightMargin: 30
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 30
 
-    GridView {
-        id: listModelFromCpp
-        cellHeight: 80
+        GridView {
+            id: listModelFromCpp
+            anchors.rightMargin: 3
+            anchors.leftMargin: 3
+            anchors.bottomMargin: 3
+            anchors.topMargin: 3
 
-        contentHeight: 80
-        contentWidth: 100
-        anchors.fill: parent
+            cellHeight: 90
+            cellWidth: parent.width / 2 - anchors.leftMargin - anchors.rightMargin
 
-        model: myProductModel
-        delegate: Rectangle {
-            height: parent.height
-            width: parent.width
-            //anchors.fill: parent
-            color: modelData.color
-            Text {
-                text: modelData.name + " - " + modelData.prezzo
-                anchors.fill: parent
-                anchors.centerIn: parent
-                font.pointSize: 20
-            }
-            MouseArea {
-                onClicked: console.log(modelData.name)
+            anchors.fill: parent
+
+            model: myProductModel
+            delegate: Rectangle {
+                id: cellaGrid
+                height: listModelFromCpp.cellHeight
+                width: listModelFromCpp.cellWidth
+
+                color: modelData.color
+                radius: 6
+
+                Rectangle {
+                    id: rectImage
+                    color: "black"
+                    radius: 6
+                    anchors.leftMargin: 3
+                    anchors.left: parent.left
+                    anchors.top: parent.top
+                    anchors.topMargin: 3
+                    anchors.bottom: parent.bottom
+                    anchors.bottomMargin: 3
+                    width: 50
+                }
+
+                Text {
+                    text: modelData.name + " - " + modelData.prezzo
+                    anchors.left: rectImage.right
+                    anchors.right: parent.right
+                    anchors.bottom: parent.bottom
+                    anchors.top: parent.top
+                    anchors.leftMargin: 3
+                    font.pointSize: 20
+                }
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: console.log(modelData.name)
+                }
             }
         }
     }
-}
     // -- Fine MVC - MVD
 
     Keyboard {
@@ -58,7 +152,7 @@ Window {
         anchors.topMargin: 5
 
         onKeyboardCode: function (code) {
-            console.log("Codice: "+code)
+            // console.log("Codice: "+code)
             if (code[0]==='1'){
                 image.source = "images/pingu200.png"
                 imageProd.source = "images/pingu200.png"
@@ -84,7 +178,7 @@ Window {
                 divDetail.detailTitle.text = "Sensual Massage"
             }
             else
-                image.source = "TestdiGravidanza_NEW.jpg"
+                image.source = "images/pingu200.png"
         }
     }
 
@@ -108,9 +202,12 @@ Window {
             anchors.fill: parent
             onClicked: {
                 console.log("Pressed for anim")
-                //prodAnimation.start()
+                prodAnimation.start()
                 //propAnim.start()
-                propAnimVert.start()
+                //propAnimVert.start()
+                //function(){
+                //    credit = credit + 4.5
+                //}
             }
         }
 
@@ -166,7 +263,7 @@ Window {
             anchors.horizontalCenterOffset: 0
             anchors.horizontalCenter: parent.horizontalCenter
             style: Text.Raised
-            font.pixelSize: 60
+            font.pixelSize: 65
             font.family: atkFont.name
         }
 
@@ -232,6 +329,16 @@ Window {
     }
 
     Text {
+        id: textColonne
+        x: 469
+        y: 117
+        width: 38
+        height: 20
+        text: qsTr("Text")
+        font.pixelSize: 12
+    }
+
+    Text {
         id: farmacie
         x: 612
         y: 21
@@ -246,8 +353,7 @@ Window {
         anchors.fill: parent
     }
 
+
 }
-
-
 
 

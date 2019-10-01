@@ -34,9 +34,12 @@ int main(int argc, char *argv[])
 
     //SM Collegamento tra C++ e QML
     QQmlContext *context = engine.rootContext();
-    Label label("Pippo");
 
+
+    Label label("Pippo");
     context->setContextProperty("label",&label);
+    context->setContextProperty("colonne", 14);
+    context->setContextProperty("credit", 8.50);
     // Il QML può far riferimento al nome 'label' e al valore 'label.name'
 
 
@@ -46,6 +49,7 @@ int main(int argc, char *argv[])
        db.setDatabaseName("kiosk");
        db.setUserName("root");
        db.setPassword("amtek");
+
        bool ok = db.open();
 
     if (ok){
@@ -98,7 +102,9 @@ int main(int argc, char *argv[])
 
 
     // - WebSocket
-    IoBoard board();
+    IoBoard board(QUrl("ws://10.191.40.232:7681"));
+    // QObject::connect(&board, &IoBoard::closed, &app, &IoBoard::boardDebug);
+    board.boardDebug();
 
     // Collega il signal della classe alla chiusura della app
     // QObject::connect(&client, &EchoClient::closed, &a, &QCoreApplication::quit);

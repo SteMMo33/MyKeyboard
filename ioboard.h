@@ -10,7 +10,8 @@ class IoBoard : public QObject
     Q_OBJECT
 
 public:
-    explicit IoBoard();
+    explicit IoBoard(QUrl url);
+    void boardDebug();
 
 Q_SIGNALS:
     void closed();
@@ -18,6 +19,7 @@ Q_SIGNALS:
 private Q_SLOTS:
     void onConnected();
     void onTextMessageReceived(QString message);
+    void onError();
 
 private:
     QWebSocket m_webSocket;
