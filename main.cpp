@@ -34,6 +34,16 @@ int main(int argc, char *argv[])
     context->setContextProperty("label",&label);
     // Il QML può far riferimento al nome 'label' e al valore 'label.name'
 
+
+    // Dati inseriti da codice C++ - diventerà lettura da DB
+    QStringList dataList;
+    dataList.append("Item 1");
+    dataList.append("Item 2");
+    dataList.append("Item 3");
+    dataList.append("Item 4");
+    context->setContextProperty("myProductModel", QVariant::fromValue(dataList));
+
+
     engine.load(url);
 
     //SM Come puntare un oggetto QML ed usarlo in C++
@@ -44,7 +54,10 @@ int main(int argc, char *argv[])
 
 
     // - WebSocket
-    IoBoard* board = new IoBoard();
+    IoBoard board();
+
+    // Collega il signal della classe alla chiusura della app
+    // QObject::connect(&client, &EchoClient::closed, &a, &QCoreApplication::quit);
 
     // Run
     return app.exec();

@@ -50,6 +50,24 @@ Window {
         }
     }
 
+    ListView {
+        id: listModelFromCpp
+        x: 730
+        y: 670
+        width: 200; height: 100
+        anchors.right: parent.right
+        anchors.rightMargin: 30
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 30
+
+        model: myProductModel
+        delegate: Rectangle {
+            height: 25
+            width: 100
+            Text { text: modelData }
+        }
+    }
+
     // -- Fine MVC - MVD
 
     Keyboard {
@@ -63,12 +81,14 @@ Window {
 
         onKeyboardCode: function (code) {
             console.log("Codice: "+code)
-            if (code[0]==='1')
+            if (code[0]==='1'){
                 image.source = "pingu200.png"
+                imageProd.source = "pingu200.png"
+            }
             else if (code[0]==='2'){
                 imageProd.source = "Finissimo12.png"
-                detailFotoProd.source = "Finissimo12.png"
-                detailTitle.text = "Finissimo 12"
+                divDetail.detailFotoProd.source = "Finissimo12.png"
+                divDetail.detailTitle.text = "Finissimo 12"
             }
             else if (code[0]==='3'){
                 imageProd.source = "FinissmoEasyWay_6.png"
@@ -77,7 +97,7 @@ Window {
             }
             else if (code[0]==='4'){
                 imageProd.source = "gel_madagascar.png"
-                divDetail.detailTitle = "Gel Madagascar"
+                divDetail.detailTitle.text = "Gel Madagascar"
                 divDetail.detailFotoProd.source = "gel_madagascar.png"
             }
             else if (code[0]==='5'){
@@ -99,12 +119,12 @@ Window {
         anchors.topMargin: 149
         anchors.right: parent.right
         anchors.rightMargin: 22
-    Image {
-        id: image
-        anchors.fill: parent
-        source: "pingu200.png"
-        fillMode: Image.PreserveAspectFit
-    }
+        Image {
+            id: image
+            anchors.fill: parent
+            source: "pingu200.png"
+            fillMode: Image.PreserveAspectFit
+        }
         MouseArea {
             id: mouseArea
             anchors.fill: parent
@@ -129,24 +149,61 @@ Window {
 
         PropertyAnimation {
             id: propAnimVert
-        target: rectProduct
-        properties: "x"
-        // from: 100;
-        to: 600
-        duration:1500
-        //running: true
-        easing.type: "OutElastic"
+            target: rectProduct
+            properties: "x"
+            // from: 100;
+            to: 600
+            duration:1500
+            //running: true
+            easing.type: "OutElastic"
         }
 
         PropertyAnimation {
             id: propAnim
-        target: rectProduct
-        // properties: "width, height"
-        properties: "x"
-        from: 100; to: 200
-        duration:1500
-        //running: true
-        easing.type: "InElastic"
+            target: rectProduct
+            // properties: "width, height"
+            properties: "x"
+            from: 100; to: 200
+            duration:1500
+            //running: true
+            easing.type: "InElastic"
+        }
+    }
+
+    Rectangle {
+        id: divCredit
+        x: 421
+        y: 206
+        width: 200
+        height: 200
+        color: "#80000000"
+        radius: 19
+
+        Text {
+            id: credit
+            x: 27
+            y: 34
+            color: "#fc7f15"
+            text: qsTr("0.00")
+            anchors.horizontalCenterOffset: 0
+            anchors.horizontalCenter: parent.horizontalCenter
+            style: Text.Raised
+            font.pixelSize: 60
+            font.family: atkFont.name
+        }
+
+        Text {
+            id: lblEuro
+            x: 48
+            y: 113
+            color: "#fc7f15"
+            text: qsTr("euro")
+            anchors.horizontalCenterOffset: 0
+            anchors.horizontalCenter: parent.horizontalCenter
+            horizontalAlignment: Text.AlignHCenter
+            font.family: atkFont.name
+            font.pixelSize: 40
+            style: Text.Raised
         }
     }
 
@@ -205,21 +262,12 @@ Window {
         font.family: atkFont.name
     }
 
-    Text {
-        id: credit
-        x: 411
-        y: 149
-        color: "#fc7f15"
-        text: qsTr("0.00")
-        font.pixelSize: 50
-        font.family: atkFont.name
-    }
-
     DetailDiv {
         id: divDetail
         visible: false
         anchors.fill: parent
     }
+
 }
 
 
