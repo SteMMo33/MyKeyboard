@@ -92,6 +92,7 @@ int main(int argc, char *argv[])
 
     context->setContextProperty("myProductModel", QVariant::fromValue(dataList));
 
+
     engine.load(url);
 
     //SM Come puntare un oggetto QML ed usarlo in C++
@@ -102,12 +103,19 @@ int main(int argc, char *argv[])
 
 
     // - WebSocket
-    IoBoard board(QUrl("ws://10.191.40.232:7681"));
+    // IoBoard board(QUrl("ws://10.191.40.232:7681"));
+    IoBoard board(QUrl("ws://localhost:7681"));
     // QObject::connect(&board, &IoBoard::closed, &app, &IoBoard::boardDebug);
     board.boardDebug();
 
     // Collega il signal della classe alla chiusura della app
     // QObject::connect(&client, &EchoClient::closed, &a, &QCoreApplication::quit);
+
+    // One possible way to work with a C++ object in QML is to add the object as a property
+    // to the root context of the QML tree. You can decide on a name for the property,
+    // which is then globally available in your QML code.
+    board.doSomething("From C++");
+    context->setContextProperty("myWebSocket", &board);
 
     // Run
     return app.exec();

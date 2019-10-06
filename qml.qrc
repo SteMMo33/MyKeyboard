@@ -18,5 +18,6 @@
         <file>images/orologio.png</file>
         <file>images/pingu200.png</file>
         <file>images/sensual-massage.png</file>
+        <file>JsonWindowForm.qml</file>
     </qresource>
 </RCC>

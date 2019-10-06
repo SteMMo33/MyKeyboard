@@ -1,5 +1,6 @@
 import QtQuick 2.5
 import QtQuick.Window 2.0
+import QtQuick.Controls 2.0
 import QtWebSockets 1.0
 
 
@@ -20,12 +21,17 @@ Window {
 
     WebSocket {
         id: socket
+
         // url: "ws://echo.websocket.org" //
-        url: "ws://10.191.40.232:7681"
+        // url: "ws://10.191.40.232:7681"
+        url: "ws://localhost:7681"
+
         onTextMessageReceived: {
             messageBox.text = messageBox.text + "\nReceived message: " + message
         }
-        onStatusChanged: if (socket.status == WebSocket.Error) {
+        onStatusChanged: {
+            console.log("State: "+socket.status)
+            if (socket.status == WebSocket.Error) {
                                     console.log("Error: " + socket.errorString)
                                 } else if (socket.status == WebSocket.Open) {
                                     socket.sendTextMessage("Hello World")
@@ -34,6 +40,7 @@ Window {
                                 } else if (socket.status == WebSocket.Connecting) {
                              messageBox.text += "\nto "+socket.url
                          }
+        }
         active: false
     }
 
@@ -188,7 +195,7 @@ Window {
         width: 200
         height: 227
         anchors.top: parent.top
-        anchors.topMargin: 149
+        anchors.topMargin: 176
         anchors.right: parent.right
         anchors.rightMargin: 22
         Image {
@@ -354,6 +361,45 @@ Window {
     }
 
 
+    Button {
+        id: btnOpen
+        text: "WS Open"
+        anchors.top: parent.top
+        anchors.topMargin: 10
+        anchors.right: parent.right
+        anchors.rightMargin: 10
+        onClicked: myWebSocket.doOpen()
+    }
+
+    Button {
+        id: btnClose
+        text: "WS Close"
+        anchors.topMargin: 10
+        anchors.top: btnOpen.bottom
+        anchors.right: parent.right
+        anchors.rightMargin: 10
+        onClicked: myWebSocket.doClose()
+    }
+
+    Button {
+        id: btnState
+        text: "WS State"
+        anchors.topMargin: 10
+        anchors.top: btnClose.bottom
+        anchors.right: parent.right
+        anchors.rightMargin: 10
+        onClicked: myWebSocket.getState()
+    }
+
+    Button {
+        id: btnSend
+        text: "WS Send"
+        anchors.top: btnState.top
+        anchors.topMargin: 0
+        anchors.right: btnState.left
+        anchors.rightMargin: 10
+        onClicked: myWebSocket.sendCmd("ciao")
+    }
 }
 
 
