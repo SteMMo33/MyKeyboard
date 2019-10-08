@@ -1,6 +1,10 @@
 #include "ioboard.h"
 
 
+/**
+ * @brief IoBoard::IoBoard - Csotruttore - Viene aperto il websocket verso la scheda di IO
+ * @param url
+ */
 IoBoard::IoBoard(QUrl url) : m_debug(true), m_url(url)
 {
     qDebug() << "++ IoBoard Constructor to " << url;
@@ -32,7 +36,8 @@ void IoBoard::onConnected()
     // In caso di ricezione dati richiama la funzione membro
     connect(&m_webSocket, &QWebSocket::textMessageReceived, this, &IoBoard::onTextMessageReceived);
 
-    m_webSocket.sendTextMessage(QStringLiteral("Hello, world!"));
+    onStatusChanged("Connected");
+    // m_webSocket.sendTextMessage(QStringLiteral("Hello, world!"));
 }
 
 
@@ -40,6 +45,7 @@ void IoBoard::onDisconnected()
 {
     if (m_debug)
         qDebug() << "[IoBoard] WebSocket disconnected";
+    onStatusChanged("Not Connected");
 }
 
 
@@ -49,11 +55,16 @@ void IoBoard::onError()
 };
 
 
+/**
+ * @brief IoBoard::onTextMessageReceived
+ * @param message
+ */
 void IoBoard::onTextMessageReceived(QString message)
 {
     if (m_debug)
         qDebug() << "[IoBoard] Message received:" << message;
-    m_webSocket.close();
+    //? m_webSocket.close();
+    _protocol.DecodeCommand(message);
 }
 
 void IoBoard::boardDebug()
@@ -68,7 +79,7 @@ void IoBoard::doSomething(const QString &text) {
 
 
 void IoBoard::doOpen() {
- qDebug() << "[] doOpen";
+ qDebug() << "[] doOpen @ " << m_url;
  m_webSocket.open(m_url);
 }
 
@@ -77,9 +88,9 @@ void IoBoard::doClose() {
  m_webSocket.close();
 }
 
-void IoBoard::getState() {
+QString IoBoard::getState() {
  qDebug() << "[] getState - State: " << m_webSocket.state();
- // return m_webSocket.state();
+ return m_webSocket.state()==QAbstractSocket::ConnectedState ? "Connected": "Not connected";
 }
 
 void IoBoard::sendCmd(QString cmd) {

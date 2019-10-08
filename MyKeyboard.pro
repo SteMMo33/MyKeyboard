@@ -17,7 +17,8 @@ SOURCES += \
         label.cpp \
         main.cpp \
     ioboard.cpp \
-    productobject.cpp
+    productobject.cpp \
+    boardprotocol.cpp
 
 RESOURCES += qml.qrc
 
@@ -35,4 +36,5 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 HEADERS += \
     label.h \
     ioboard.h \
-    productobject.h
+    productobject.h \
+    boardprotocol.h

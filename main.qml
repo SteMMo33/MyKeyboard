@@ -6,8 +6,8 @@ import QtWebSockets 1.0
 
 Window {
 
-    property int colonne;
-    property var credit : 0
+    property int colonne
+    property alias credit : txtCredit.text
 
     id: window
     visible: true
@@ -54,10 +54,13 @@ Window {
               anchors.fill: parent
               onClicked: {
                   socket.active = !socket.active
-                  console.log("Press: "+socket.active)
-                  messageBox.text = "Now is "+socket.active
-                  //if (socket.active == WebSocket.Connecting)
-                  //    messageBox.text += "\nto: "+socket.url
+
+                  console.log("Press - active: "+socket.active)
+                  messageBox.text = "Active is "+socket.active
+                  if (socket.active == true){
+                      messageBox.text += "\nto: "+socket.url
+                      console.log("to: "+socket.url)
+                  }
                   //Qt.quit();
               }
           }
@@ -262,7 +265,7 @@ Window {
         radius: 19
 
         Text {
-            id: credit
+            id: txtCredit
             x: 27
             y: 34
             color: "#fc7f15"
@@ -388,7 +391,7 @@ Window {
         anchors.top: btnClose.bottom
         anchors.right: parent.right
         anchors.rightMargin: 10
-        onClicked: myWebSocket.getState()
+        onClicked: textWsState.text = myWebSocket.getState()
     }
 
     Button {
@@ -398,7 +401,37 @@ Window {
         anchors.topMargin: 0
         anchors.right: btnState.left
         anchors.rightMargin: 10
-        onClicked: myWebSocket.sendCmd("ciao")
+        onClicked: myWebSocket.sendCmd("{\"cmd\":\"ciao\"}")
+    }
+
+    Button {
+        id: btnSendLightOn
+        text: "Light ON"
+        anchors.top: btnState.top
+        anchors.topMargin: 0
+        anchors.right: btnSend.left
+        anchors.rightMargin: 10
+        onClicked: myWebSocket.sendCmd("{\"setLightOn\"}")
+    }
+
+    Button {
+        id: btnSendLightOff
+        text: "Light OFF"
+        anchors.top: btnState.top
+        anchors.topMargin: 0
+        anchors.right: btnSendLightOn.left
+        anchors.rightMargin: 10
+        onClicked: myWebSocket.sendCmd("{\"setLightOff\"}")
+    }
+
+    Text {
+        id: textWsState
+        x: 780
+        y: 80
+        width: 38
+        height: 20
+        text: qsTr("Text")
+        font.pixelSize: 12
     }
 }
 

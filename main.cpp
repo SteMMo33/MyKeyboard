@@ -103,8 +103,8 @@ int main(int argc, char *argv[])
 
 
     // - WebSocket
-    // IoBoard board(QUrl("ws://10.191.40.232:7681"));
-    IoBoard board(QUrl("ws://localhost:7681"));
+    IoBoard board(QUrl("ws://10.191.40.232:7681"));
+    // IoBoard board(QUrl("ws://localhost:7681"));
     // QObject::connect(&board, &IoBoard::closed, &app, &IoBoard::boardDebug);
     board.boardDebug();
 
