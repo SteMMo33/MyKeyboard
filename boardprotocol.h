@@ -3,9 +3,11 @@
 
 #include <QtCore/QObject>
 #include <QJsonDocument>
+#include <QJsonObject>
+#include <QDebug>
 
 
-class BoardProtocol
+class BoardProtocol : public QObject
 {
     Q_OBJECT
 
