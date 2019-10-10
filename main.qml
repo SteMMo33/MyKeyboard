@@ -1,13 +1,12 @@
 import QtQuick 2.5
 import QtQuick.Window 2.0
 import QtQuick.Controls 2.0
-import QtWebSockets 1.0
 
 
 Window {
 
     property int colonne
-    property alias credit : txtCredit.text
+    property alias credit : txtCreditInt.text
 
     id: window
     visible: true
@@ -17,75 +16,6 @@ Window {
 
     FontLoader { id: atkFont; name: "Proxima Nova Rg"; source: "qrc:fonts/ProximaNova-Bold.otf" }
 
-    // ---
-
-    WebSocket {
-        id: socket
-
-        // url: "ws://echo.websocket.org" //
-        // url: "ws://10.191.40.232:7681"
-        url: "ws://localhost:7681"
-
-        onTextMessageReceived: {
-            messageBox.text = messageBox.text + "\nReceived message: " + message
-        }
-        onStatusChanged: {
-            console.log("State: "+socket.status)
-            if (socket.status == WebSocket.Error) {
-                                    console.log("Error: " + socket.errorString)
-                                } else if (socket.status == WebSocket.Open) {
-                                    socket.sendTextMessage("Hello World")
-                                } else if (socket.status == WebSocket.Closed) {
-                                    messageBox.text += "\nSocket closed"
-                                } else if (socket.status == WebSocket.Connecting) {
-                             messageBox.text += "\nto "+socket.url
-                         }
-        }
-        active: false
-    }
-
-    Text {
-       id: messageBox
-       text: socket.status == WebSocket.Open ? qsTr("Sending...") : qsTr("Welcome!")
-       anchors.centerIn: parent
-       height: 100;
-
-       MouseArea {
-              anchors.fill: parent
-              onClicked: {
-                  socket.active = !socket.active
-
-                  console.log("Press - active: "+socket.active)
-                  messageBox.text = "Active is "+socket.active
-                  if (socket.active == true){
-                      messageBox.text += "\nto: "+socket.url
-                      console.log("to: "+socket.url)
-                  }
-                  //Qt.quit();
-              }
-          }
-    }
-
-    Text {
-        id: wsCmd
-        text: qsTr("CMD")
-        verticalAlignment: Text.AlignVCenter
-        horizontalAlignment: Text.AlignHCenter
-       x: 48
-       y: 432
-       width: 200
-       height: 100;
-
-       MouseArea {
-           anchors.fill: parent
-              onClicked: {
-                  socket.sendTextMessage("{ cmd: \"firmware\"} ")
-                  console.log("SentCmd")
-              }
-          }
-    }
-
-    // ----
 
     Rectangle {
         id: containerBtns
@@ -265,15 +195,27 @@ Window {
         radius: 19
 
         Text {
-            id: txtCredit
-            x: 27
+            id: txtCreditInt
             y: 34
             color: "#fc7f15"
-            text: qsTr("0.00")
-            anchors.horizontalCenterOffset: 0
-            anchors.horizontalCenter: parent.horizontalCenter
+            text: qsTr("0.")
+            anchors.left: parent.left
+            anchors.leftMargin: 52
             style: Text.Raised
             font.pixelSize: 65
+            font.family: atkFont.name
+        }
+        Text {
+            id: txtCreditDec
+            y: 34
+            color: "#fc7f15"
+            text: qsTr("00")
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: 102
+            anchors.left: txtCreditInt.right
+            anchors.leftMargin: 0
+            style: Text.Raised
+            font.pixelSize: 55
             font.family: atkFont.name
         }
 
@@ -391,7 +333,10 @@ Window {
         anchors.top: btnClose.bottom
         anchors.right: parent.right
         anchors.rightMargin: 10
-        onClicked: textWsState.text = myWebSocket.getState()
+        onClicked: {
+            txtCreditInt.text = "10."
+            textWsState.text = myWebSocket.getState()
+        }
     }
 
     Button {
@@ -411,7 +356,7 @@ Window {
         anchors.topMargin: 0
         anchors.right: btnSend.left
         anchors.rightMargin: 10
-        onClicked: myWebSocket.sendCmd("{\"setLightOn\"}")
+        onClicked: myWebSocket.sendCmd("setLightOn")
     }
 
     Button {
@@ -421,7 +366,7 @@ Window {
         anchors.topMargin: 0
         anchors.right: btnSendLightOn.left
         anchors.rightMargin: 10
-        onClicked: myWebSocket.sendCmd("{\"setLightOff\"}")
+        onClicked: myWebSocket.sendCmd("setLightOff")
     }
 
     Text {

@@ -5,8 +5,6 @@
         <file>Key.qml</file>
         <file>fonts/ProximaNova-Bold.otf</file>
         <file>fonts/ProximaNova-Regular.otf</file>
-        <file>label.cpp</file>
-        <file>label.h</file>
         <file>main.cpp</file>
         <file>DetailDiv.qml</file>
         <file>images/gel_madagascar.png</file>

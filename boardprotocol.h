@@ -6,15 +6,31 @@
 #include <QJsonObject>
 #include <QDebug>
 
+//#include "ioboard.h"
+#include "banconote.h"
+
+
 
 class BoardProtocol : public QObject
 {
     Q_OBJECT
 
+Q_SIGNALS:
+    void bancChanged(int val);
+    void coinChanged(float val);
+    void creditChanged(float credit);
+
+public slots:
+    // void onCreditChanged(float nEuroCents);
+
 public:
-    BoardProtocol();
+    BoardProtocol(/*IoBoard* board*/);
 
     void DecodeCommand(QString cmd);
+
+
+private:
+    Banconote m_banconote;
 };
 
 #endif // BOARDPROTOCOL_H

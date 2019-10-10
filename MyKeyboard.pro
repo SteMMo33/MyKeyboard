@@ -18,7 +18,8 @@ SOURCES += \
         main.cpp \
     ioboard.cpp \
     productobject.cpp \
-    boardprotocol.cpp
+    boardprotocol.cpp \
+    banconote.cpp
 
 RESOURCES += qml.qrc
 
@@ -37,4 +38,5 @@ HEADERS += \
     label.h \
     ioboard.h \
     productobject.h \
-    boardprotocol.h
+    boardprotocol.h \
+    banconote.h

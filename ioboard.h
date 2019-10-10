@@ -3,6 +3,7 @@
 
 #include <QtCore/QObject>
 #include <QtWebSockets/QWebSocket>
+#include <QQmlContext>
 
 #include "boardprotocol.h"
 
@@ -12,7 +13,7 @@ class IoBoard : public QObject
     Q_OBJECT
 
 public:
-    explicit IoBoard(QUrl url);
+    explicit IoBoard(QUrl url, QQmlContext* pContext);
     void boardDebug();
 
 public slots:   // slots are public methods available in QML
@@ -23,22 +24,25 @@ public slots:   // slots are public methods available in QML
     void sendCmd(QString cmd);
 
 
-
 Q_SIGNALS:
     void closed();
-    void onStatusChanged(QString msg);
+    void statusChanged(QString msg);
+
 
 private Q_SLOTS:
     void onConnected();
     void onDisconnected();
     void onTextMessageReceived(QString message);
     void onError();
+    void onBancChanged(int);
+    void onCreditChanged(float);
 
 private:
     QWebSocket m_webSocket;
     bool m_debug;
     QUrl m_url;
-    BoardProtocol _protocol;
+    BoardProtocol m_protocol;
+    QQmlContext* m_pQmlContext;
 };
 
 #endif // IOBOARD_H
