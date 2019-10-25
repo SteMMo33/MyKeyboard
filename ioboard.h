@@ -6,6 +6,7 @@
 #include <QQmlContext>
 
 #include "boardprotocol.h"
+#include "productobject.h"
 
 
 class IoBoard : public QObject
@@ -36,6 +37,7 @@ private Q_SLOTS:
     void onError();
     void onBancChanged(int);
     void onCreditChanged(float);
+    void onNewProduct(ProductObject *product);
 
 private:
     QWebSocket m_webSocket;
@@ -43,6 +45,8 @@ private:
     QUrl m_url;
     BoardProtocol m_protocol;
     QQmlContext* m_pQmlContext;
+    QList<ProductObject*> m_products;
+    int m_idxNewProduct;
 };
 
 #endif // IOBOARD_H

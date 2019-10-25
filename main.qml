@@ -5,8 +5,7 @@ import QtQuick.Controls 2.0
 
 Window {
 
-    property int colonne
-    property alias credit : txtCreditInt.text
+    // property alias credit : txtCreditInt.text
 
     id: window
     visible: true
@@ -16,31 +15,30 @@ Window {
 
     FontLoader { id: atkFont; name: "Proxima Nova Rg"; source: "qrc:fonts/ProximaNova-Bold.otf" }
 
+    Connections {
+        // target: credit
+        //onCreditChanged: console.log("XXX")
+    }
 
     Rectangle {
         id: containerBtns
-        y: 557
-        height: 300
+        y: 428
+        height: 435
         color: "#80000040"
         anchors.left: parent.left
-        anchors.leftMargin: 520
+        anchors.leftMargin: 442
 
         anchors.right: parent.right
-        anchors.rightMargin: 30
+        anchors.rightMargin: 20
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: 30
+        anchors.bottomMargin: 20
 
         GridView {
             id: listModelFromCpp
-            anchors.rightMargin: 3
-            anchors.leftMargin: 3
-            anchors.bottomMargin: 3
-            anchors.topMargin: 3
+            anchors.fill: parent
 
             cellHeight: 90
             cellWidth: parent.width / 2 - anchors.leftMargin - anchors.rightMargin
-
-            anchors.fill: parent
 
             model: myProductModel
             delegate: Rectangle {
@@ -48,7 +46,7 @@ Window {
                 height: listModelFromCpp.cellHeight
                 width: listModelFromCpp.cellWidth
 
-                color: modelData.color
+                // color: modelData.color
                 radius: 6
 
                 Rectangle {
@@ -122,77 +120,17 @@ Window {
         }
     }
 
-    Rectangle{
-        id: rectProduct
-        x: 418
-        width: 200
-        height: 227
-        anchors.top: parent.top
-        anchors.topMargin: 176
-        anchors.right: parent.right
-        anchors.rightMargin: 22
-        Image {
-            id: image
-            anchors.fill: parent
-            source: "images/pingu200.png"
-            fillMode: Image.PreserveAspectFit
-        }
-        MouseArea {
-            id: mouseArea
-            anchors.fill: parent
-            onClicked: {
-                console.log("Pressed for anim")
-                prodAnimation.start()
-                //propAnim.start()
-                //propAnimVert.start()
-                //function(){
-                //    credit = credit + 4.5
-                //}
-            }
-        }
-
-        NumberAnimation on y {
-            target: image
-            //target: rectProduct
-            // property: "x"
-            id: prodAnimation
-            // from: 0;
-            to: 600
-            // to: rectProduct.width - image.width - rectProduct.padding
-            duration:1500
-        }
-
-        PropertyAnimation {
-            id: propAnimVert
-            target: rectProduct
-            properties: "x"
-            // from: 100;
-            to: 600
-            duration:1500
-            //running: true
-            easing.type: "OutElastic"
-        }
-
-        PropertyAnimation {
-            id: propAnim
-            target: rectProduct
-            // properties: "width, height"
-            properties: "x"
-            from: 100; to: 200
-            duration:1500
-            //running: true
-            easing.type: "InElastic"
-        }
-    }
-
     Rectangle {
         id: divCredit
-        x: 421
-        y: 206
+        x: 763
         width: 200
         height: 200
         color: "#80000000"
         radius: 19
+        anchors.right: parent.right
+        anchors.rightMargin: 30
+        anchors.top: parent.top
+        anchors.topMargin: 70
 
         Text {
             id: txtCreditInt
@@ -200,7 +138,7 @@ Window {
             color: "#fc7f15"
             text: qsTr("0.")
             anchors.left: parent.left
-            anchors.leftMargin: 52
+            anchors.leftMargin: 39
             style: Text.Raised
             font.pixelSize: 65
             font.family: atkFont.name
@@ -244,22 +182,27 @@ Window {
 
     Image {
         id: bottoneProd
-        y: 461
+        y: 512
+        width: 414
+        height: 211
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: 15
+        anchors.bottomMargin: 82
         anchors.left: parent.left
-        anchors.leftMargin: 15
+        anchors.leftMargin: 22
         source: "images/BTN.png"
         fillMode: Image.PreserveAspectFit
 
         Rectangle {
             id: rectangle
-            x: 16
-            y: 5
             width: 154
-            height: 190
             color: "#000000"
             radius: 17
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: 10
+            anchors.top: parent.top
+            anchors.topMargin: 10
+            anchors.left: parent.left
+            anchors.leftMargin: 10
 
             Image {
                 id: imageProd
@@ -286,7 +229,7 @@ Window {
         y: 117
         width: 38
         height: 20
-        text: qsTr("Text")
+        text: colonne+" colonne"
         font.pixelSize: 12
     }
 
@@ -308,31 +251,30 @@ Window {
 
     Button {
         id: btnOpen
+        x: 469
         text: "WS Open"
         anchors.top: parent.top
-        anchors.topMargin: 10
+        anchors.topMargin: 163
         anchors.right: parent.right
-        anchors.rightMargin: 10
+        anchors.rightMargin: 431
         onClicked: myWebSocket.doOpen()
     }
 
     Button {
         id: btnClose
         text: "WS Close"
-        anchors.topMargin: 10
         anchors.top: btnOpen.bottom
-        anchors.right: parent.right
-        anchors.rightMargin: 10
+        anchors.topMargin: -40
+        anchors.left: btnOpen.right
+        anchors.leftMargin: 7
         onClicked: myWebSocket.doClose()
     }
 
     Button {
         id: btnState
+        x: 576
+        y: 269
         text: "WS State"
-        anchors.topMargin: 10
-        anchors.top: btnClose.bottom
-        anchors.right: parent.right
-        anchors.rightMargin: 10
         onClicked: {
             txtCreditInt.text = "10."
             textWsState.text = myWebSocket.getState()
@@ -341,39 +283,33 @@ Window {
 
     Button {
         id: btnSend
+        x: 469
+        y: 269
         text: "WS Send"
-        anchors.top: btnState.top
-        anchors.topMargin: 0
-        anchors.right: btnState.left
-        anchors.rightMargin: 10
         onClicked: myWebSocket.sendCmd("{\"cmd\":\"ciao\"}")
     }
 
     Button {
         id: btnSendLightOn
+        x: 469
+        y: 216
         text: "Light ON"
-        anchors.top: btnState.top
-        anchors.topMargin: 0
-        anchors.right: btnSend.left
-        anchors.rightMargin: 10
         onClicked: myWebSocket.sendCmd("setLightOn")
     }
 
     Button {
         id: btnSendLightOff
+        x: 576
+        y: 216
         text: "Light OFF"
-        anchors.top: btnState.top
-        anchors.topMargin: 0
-        anchors.right: btnSendLightOn.left
-        anchors.rightMargin: 10
         onClicked: myWebSocket.sendCmd("setLightOff")
     }
 
     Text {
         id: textWsState
-        x: 780
-        y: 80
-        width: 38
+        x: 469
+        y: 315
+        width: 207
         height: 20
         text: qsTr("Text")
         font.pixelSize: 12

@@ -42,7 +42,6 @@ int main(int argc, char *argv[])
     context->setContextProperty("credit", 8.50);
     // Il QML può far riferimento al nome 'label' e al valore 'label.name'
 
-
     // Apertura databse MySql
     QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");
        db.setHostName("10.191.40.232");
@@ -86,10 +85,9 @@ int main(int argc, char *argv[])
     QList<QObject*> dataList;
        dataList.append(new ProductObject(QString("Easy 12"), QString("red"), "5.50"));
        dataList.append(new ProductObject("Signs 12", "green", "4.50"));
-       dataList.append(new ProductObject("Cerotti buoni", "blue", "10.00"));
-       dataList.append(new ProductObject("Gel Mediterranean", "yellow", "9.00"));
-       dataList.append(new ProductObject("XLUBE", "orange", "12.00"));
-
+//       dataList.append(new ProductObject("Cerotti buoni", "blue", "10.00"));
+//       dataList.append(new ProductObject("Gel Mediterranean", "yellow", "9.00"));
+//       dataList.append(new ProductObject("XLUBE", "orange", "12.00"));
     context->setContextProperty("myProductModel", QVariant::fromValue(dataList));
 
 
@@ -116,7 +114,6 @@ int main(int argc, char *argv[])
     // which is then globally available in your QML code.
     board.doSomething("From C++");
     context->setContextProperty("myWebSocket", &board);
-
 
     // Run
     return app.exec();

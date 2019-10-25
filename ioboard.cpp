@@ -2,7 +2,7 @@
 
 
 /**
- * @brief IoBoard::IoBoard - Csotruttore - Viene aperto il websocket verso la scheda di IO
+ * @brief IoBoard::IoBoard - Costruttore - Viene aperto il websocket verso la scheda di IO
  * @param url
  */
 IoBoard::IoBoard(QUrl url, QQmlContext* context) : m_debug(true), m_url(url), m_pQmlContext(context)
@@ -40,6 +40,13 @@ void IoBoard::onConnected()
 
     //statusChanged("Connected");
     // m_webSocket.sendTextMessage(QStringLiteral("Hello, world!"));
+
+    // Inizia il ciclo di lettura prodotti
+    connect( &m_protocol, &BoardProtocol::newProductData, this, &IoBoard::onNewProduct);
+
+    m_idxNewProduct = 1;
+    m_products.clear();
+    m_webSocket.sendTextMessage("{ \"cmd\":\"GetProduct\", \"val\":\"1\"}");
 }
 
 
@@ -105,7 +112,7 @@ void IoBoard::sendCmd(QString cmd) {
 
 void IoBoard::onCreditChanged(float credit)
 {
-    qDebug() << "[IoBoard::onCreditChanged]";
+    qDebug() << "[IoBoard::onCreditChanged]" << credit;
     m_pQmlContext->setContextProperty("credit", QString::number( credit, 'g', 2));
 }
 
@@ -114,3 +121,17 @@ void IoBoard::onBancChanged(int val)
     qDebug() << "[IoBoard::onBancChanged] val: " << val;
     m_pQmlContext->setContextProperty("credit", QString::number(val, 'g', 2));
 }
+
+
+void IoBoard::onNewProduct(ProductObject *product)
+{
+    m_products.append(product);
+
+    if (++m_idxNewProduct < 5)
+        sendCmd("{ \"cmd\":\"GetProduct\", \"val\":\"" + QString::number(m_idxNewProduct) + "\"}");
+    else {
+        qDebug() << ">> Set new ModelData size: " << m_products.length();
+        qDebug() << ">> Set new ModelData: " << m_products;
+        m_pQmlContext->setContextProperty("myProductModel", QVariant::fromValue(m_products));
+    }
+};

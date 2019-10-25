@@ -5,11 +5,8 @@
         <file>Key.qml</file>
         <file>fonts/ProximaNova-Bold.otf</file>
         <file>fonts/ProximaNova-Regular.otf</file>
-        <file>main.cpp</file>
         <file>DetailDiv.qml</file>
         <file>images/gel_madagascar.png</file>
-        <file>ioboard.cpp</file>
-        <file>ioboard.h</file>
         <file>images/BTN.png</file>
         <file>images/Finissimo12.png</file>
         <file>images/FinissmoEasyWay_6.png</file>

@@ -1,4 +1,5 @@
 #include "boardprotocol.h"
+#include "productobject.h"
 
 
 /**
@@ -25,12 +26,12 @@ void BoardProtocol::DecodeCommand(QString cmd)
 
         if (obj.contains("cmd")){
             QString cmd = obj["cmd"].toString();
-            qDebug() << "Comando: " << cmd;
+            // qDebug() << "Comando: " << cmd;
 
-            if (cmd.compare("firmware")==0){
+            if (cmd.compare("firmware")==0){        // Keep alive
                 // qDebug() << "alive!";
             }
-            else if (cmd.compare("banc")==0){
+            else if (cmd.compare("banc")==0){       // Banconota
                 QString v = obj["v"].toString();
                 QStringList elem = v.split("=");
                 int index = elem[0].toInt();
@@ -39,6 +40,21 @@ void BoardProtocol::DecodeCommand(QString cmd)
 
                 float fCredit = m_banconote.val();
                 emit creditChanged(fCredit);
+            }
+            else if (cmd.compare("GetProduct")==0){ // Lettura prodotto
+                // Controllo esito
+                QString v = obj["v"].toString();
+                if (v.compare("ok")==0){
+                    QJsonObject jData = obj["data"].toObject();
+                    // Prodotto
+                    // qDebug() << jData;
+                    ProductObject *product = new ProductObject( jData["name"].toString(), jData["desc"].toString(), jData["price"].toString());
+                    // qDebug() << product;
+                    emit newProductData(product);
+                }
+            }
+            else {
+                qDebug() << "cmd not handled";
             }
         }
         else {

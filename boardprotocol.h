@@ -8,6 +8,7 @@
 
 //#include "ioboard.h"
 #include "banconote.h"
+#include "productobject.h"
 
 
 
@@ -19,6 +20,7 @@ Q_SIGNALS:
     void bancChanged(int val);
     void coinChanged(float val);
     void creditChanged(float credit);
+    void newProductData(ProductObject *product);
 
 public slots:
     // void onCreditChanged(float nEuroCents);
