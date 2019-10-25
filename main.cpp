@@ -37,10 +37,11 @@ int main(int argc, char *argv[])
 
 
     Label label("Pippo");
-    context->setContextProperty("label",&label);
-    context->setContextProperty("colonne", 14);
-    context->setContextProperty("credit", 8.50);
+    context->setContextProperty("label", &label);
     // Il QML può far riferimento al nome 'label' e al valore 'label.name'
+
+    context->setContextProperty("colonne", 14);     // Ok
+    context->setContextProperty("credit", 8.50);
 
     // Apertura databse MySql
     QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");

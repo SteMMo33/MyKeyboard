@@ -127,11 +127,14 @@ void IoBoard::onNewProduct(ProductObject *product)
 {
     m_products.append(product);
 
-    if (++m_idxNewProduct < 5)
+    if (++m_idxNewProduct < 6)
         sendCmd("{ \"cmd\":\"GetProduct\", \"val\":\"" + QString::number(m_idxNewProduct) + "\"}");
     else {
         qDebug() << ">> Set new ModelData size: " << m_products.length();
         qDebug() << ">> Set new ModelData: " << m_products;
+        foreach (product, m_products) {
+            qDebug() << "- " << product->name();
+        }
         m_pQmlContext->setContextProperty("myProductModel", QVariant::fromValue(m_products));
     }
 };

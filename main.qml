@@ -21,7 +21,7 @@ Window {
     }
 
     Rectangle {
-        id: containerBtns
+        id: containerGrid
         y: 428
         height: 435
         color: "#80000040"
@@ -35,6 +35,10 @@ Window {
 
         GridView {
             id: listModelFromCpp
+            anchors.rightMargin: 5
+            anchors.leftMargin: 5
+            anchors.bottomMargin: 5
+            anchors.topMargin: 5
             anchors.fill: parent
 
             cellHeight: 90
@@ -136,7 +140,7 @@ Window {
             id: txtCreditInt
             y: 34
             color: "#fc7f15"
-            text: qsTr("0.")
+            text: credit // qsTr("0.")
             anchors.left: parent.left
             anchors.leftMargin: 39
             style: Text.Raised
@@ -153,7 +157,7 @@ Window {
             anchors.left: txtCreditInt.right
             anchors.leftMargin: 0
             style: Text.Raised
-            font.pixelSize: 55
+            font.pixelSize: 50
             font.family: atkFont.name
         }
 
@@ -182,11 +186,11 @@ Window {
 
     Image {
         id: bottoneProd
-        y: 512
+        y: 540
         width: 414
         height: 211
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: 82
+        anchors.bottomMargin: 49
         anchors.left: parent.left
         anchors.leftMargin: 22
         source: "images/BTN.png"
@@ -248,17 +252,21 @@ Window {
         anchors.fill: parent
     }
 
-
-    Button {
+    Rectangle {
+        id: divWsBtns
+        x: 442
+        y: 139
+        width: 200
+        height: 200
+        Button {
         id: btnOpen
-        x: 469
         text: "WS Open"
+        anchors.left: parent.left
+        anchors.leftMargin: 5
         anchors.top: parent.top
-        anchors.topMargin: 163
-        anchors.right: parent.right
-        anchors.rightMargin: 431
+        anchors.topMargin: 5
         onClicked: myWebSocket.doOpen()
-    }
+        }
 
     Button {
         id: btnClose
@@ -272,8 +280,8 @@ Window {
 
     Button {
         id: btnState
-        x: 576
-        y: 269
+        x: 112
+        y: 107
         text: "WS State"
         onClicked: {
             txtCreditInt.text = "10."
@@ -283,36 +291,58 @@ Window {
 
     Button {
         id: btnSend
-        x: 469
-        y: 269
+        x: 5
+        y: 107
         text: "WS Send"
         onClicked: myWebSocket.sendCmd("{\"cmd\":\"ciao\"}")
     }
 
     Button {
         id: btnSendLightOn
-        x: 469
-        y: 216
+        x: 5
+        y: 56
         text: "Light ON"
         onClicked: myWebSocket.sendCmd("setLightOn")
     }
 
     Button {
         id: btnSendLightOff
-        x: 576
-        y: 216
+        x: 112
+        y: 56
         text: "Light OFF"
         onClicked: myWebSocket.sendCmd("setLightOff")
     }
 
     Text {
         id: textWsState
-        x: 469
-        y: 315
+        x: 25
+        y: 164
         width: 207
         height: 20
         text: qsTr("Text")
         font.pixelSize: 12
+    }
+    }
+
+    Rectangle {
+        id: divLogo
+        x: 22
+        y: 421
+        width: 414
+        height: 100
+        color: "#021398"
+        radius: 17
+        Image {
+            id: image
+            anchors.rightMargin: 10
+            anchors.bottomMargin: 10
+            anchors.leftMargin: 10
+            anchors.topMargin: 10
+            anchors.fill: parent
+            fillMode: Image.PreserveAspectFit
+            source: "images/logo.png"
+        }
+
     }
 }
 

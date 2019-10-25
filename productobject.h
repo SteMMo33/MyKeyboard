@@ -8,9 +8,9 @@ class ProductObject : public QObject
     Q_OBJECT
 
     // Q_PROPERTY(QString name READ name WRITE setName NOTIFY nameChanged)
-    Q_PROPERTY(QString name READ name)
+    Q_PROPERTY(QString name READ name NOTIFY nameChanged)
     Q_PROPERTY(QString description READ description)
-    Q_PROPERTY(QString prezzo READ prezzo)
+    Q_PROPERTY(QString prezzo READ prezzo NOTIFY prezzoChanged)
 
 public:
     explicit ProductObject(const QString &name, const QString &desc, const QString &prezzo, QObject *parent = 0);
@@ -21,6 +21,8 @@ public:
      QString prezzo() const;
 
 signals:
+     void nameChanged();
+     void prezzoChanged();
 
 public slots:
 
